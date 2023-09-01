@@ -51,6 +51,7 @@ jobs:
         chmod 755 add-lxc-docker-custom.sh
         ./add-lxc-docker-custom.sh android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
         echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
+        sed -i '82d' lxc-docker-config.txt
 
     - name: 添加runc补丁
       run: |
