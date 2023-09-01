@@ -46,9 +46,9 @@ jobs:
     - name: 开启lxc和docker配置
       if: env.ENABLE_LXC_DOCKER == 'true'
       run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         git clone https://github.com/liuziqiang78/android_kernel_docker -b main lxc-docker --depth=1
-        echo 'source "utils/Kconfig"' >> "$GITHUB_WORKSPACE/kernel_workspace/android-kernel/Kconfig
+        echo 'source "lxc-docker/Kconfig"' >> "$GITHUB_WORKSPACE/kernel_workspace/android-kernel/Kconfig
         echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
 
     - name: 添加runc补丁
