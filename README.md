@@ -2,6 +2,9 @@
 [English](README_EN.md)
 # LXC-DOCKER-KernelSU_Action
 
+## 支持的内核版本
+4.9&emsp;&emsp;4.14&emsp;&emsp;4.19&emsp;&emsp;5.4
+
 ## 说明 
 > 有的工作流是用谷歌的 clang 12.0.5编译器
 
@@ -25,7 +28,7 @@
 - 如果编译不过，请采用clang 14 或者 clang 12 编译
 - 上方菜单选择Actions，选择All workflows，可以看到所有工作流
 - config.env文件里有对应的变量说明
-- 高端机在这里尤其指的是AB分区机子，比如一加8T、红米K30pro、小米10等，没备注的工作流都是低端机，比如小米6、红米5plus、红米note4x、红米4、红米4a等
+- 高端机在这里尤其指的是AB分区机子，比如一加8T、红米K30pro、小米10等，低端机指的是一些老旧机型，比如小米6、红米5plus、红米note4x、红米4、红米4a等
 
 <br>
 
