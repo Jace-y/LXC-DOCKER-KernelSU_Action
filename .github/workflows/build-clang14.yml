@@ -1,4 +1,4 @@
-name: google clang 14-z17
+name: 编译 lxc-docker-ksu 内核 google clang 14
 on:
   workflow_dispatch:
 
@@ -22,13 +22,11 @@ jobs:
         cat config.env | grep KERNELSU_TAG= >> $GITHUB_ENV
         cat config.env | grep ENABLE_KVM= >> $GITHUB_ENV
         cat config.env | grep ENABLE_LXC_DOCKER= >> $GITHUB_ENV
-
     - name: 构建编译内核环境
       run: |
         sudo apt-get update
         sudo -E apt-get -y -qq install git make bc bison ccache openssl zip kmod cpio flex libelf-dev curl libssl-dev libtfm-dev wget device-tree-compiler ca-certificates python3 python2 binutils binutils-aarch64-linux-gnu binutils-arm-linux-gnueabi
         mkdir -p $GITHUB_WORKSPACE/kernel_workspace
-
     
     - name: 下载Clang-aosp编译器
       run: |
@@ -46,11 +44,11 @@ jobs:
     - name: 开启lxc和docker配置
       if: env.ENABLE_LXC_DOCKER == 'true'
       run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        git clone https://github.com/Jace-y/android_kernel_docker -b main lxc-docker --depth=1
-        echo 'source "lxc-docker/Kconfig"' >> "$GITHUB_WORKSPACE/kernel_workspace/android-kernel/Kconfig
+        cd $GITHUB_WORKSPACE/kernel_workspace
+        wget https://github.com/Jace-y/LXC-DOCKER-KernelSU_Action/releases/download/test1/add-lxc-docker-custom.sh
+        chmod 755 add-lxc-docker-custom.sh
+        ./add-lxc-docker-custom.sh android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
         echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> android-kernel/arch/arm64/configs/${{ env.KERNEL_CONFIG }}
-
     - name: 添加runc补丁
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
@@ -68,7 +66,6 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s ${{ env.KERNELSU_TAG }}
-
     - name: 开启kvm
       if: env.ENABLE_KVM == 'true'
       run: |
